@@ -23,7 +23,6 @@ function forget() {
 
 function remember() {
 	chrome.windows.getAll(function(windows){
-
 		var windowIds = [];
 
 		windows.forEach(function(window){
@@ -57,15 +56,17 @@ function remember() {
 }
 
 function setTimer() {
-	setTimeout(randFrom([forget, remember]), randInt(30, 60) * (60 * 1000));
-}
-
-function randFrom(arr) {
-	return arr[randInt(0, arr.length)];
+	setTimeout(function(){
+		randFrom([forget, remember])()
+	}, randInt(30, 60) * (60 * 1000));
 }
 
 function randInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-randFrom([forget, remember])();
+function randFrom(arr) {
+	return arr[randInt(0, arr.length)];
+}
+
+setTimer();
